@@ -21,11 +21,11 @@ public class OrderService {
         return orders;
     }
 
-    public Order getOrderById(Long orderId) {
+    public Order getOrderById(Long id) {
         return orders.stream()
-                .filter(order -> order.getId().equals(orderId))
+                .filter(order -> order.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + id));
     }
 
     public Order createOrder(Order order) {
@@ -61,9 +61,9 @@ public class OrderService {
         }
     }
 
-    public void deleteOrder(Long orderId) {
+    public void deleteOrder(Long id) {
         try {
-            Order order = getOrderById(orderId);
+            Order order = getOrderById(id);
             orders.remove(order);
         } catch (Exception e) {
             throw new OrderProcessingException("Error processing order deletion", e);
@@ -73,9 +73,9 @@ public class OrderService {
         return (long) orders.size() + 1;
     }
 
-    public void addProductToOrder(Long orderId, Product product) {
+    public void addProductToOrder(Long id, Product product) {
         try {
-            Order order = getOrderById(orderId);
+            Order order = getOrderById(id);
             productService.addProduct(product);
             order.getProducts().add(product);
             recalculateOrderTotal(order);
@@ -98,7 +98,7 @@ public class OrderService {
         }
     }
 
-    public void recalculateOrderTotal(Order order) {
+    private void recalculateOrderTotal(Order order) {
         double totalAmount = order.getProducts().stream()
                 .mapToDouble(product -> product.getPrice() * product.getQuantity())
                 .sum();

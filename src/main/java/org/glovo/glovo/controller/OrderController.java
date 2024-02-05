@@ -18,9 +18,9 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/{orderId}")
-    public Order getOrderById(@PathVariable Long orderId) {
-        return orderService.getOrderById(orderId);
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Long id) {
+        return orderService.getOrderById(id);
     }
 
     @PostMapping
@@ -28,27 +28,24 @@ public class OrderController {
         return orderService.createOrder(order);
     }
 
-    @PutMapping("/{orderId}")
-    public void updateOrder(@PathVariable Long orderId, @RequestBody Order updatedOrder) {
-        updatedOrder.setId(orderId);
+    @PutMapping("/{id}")
+    public void updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
+        updatedOrder.setId(id);
         orderService.updateOrder(updatedOrder);
     }
 
-    @DeleteMapping("/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
-        orderService.deleteOrder(orderId);
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
     }
 
-    @PostMapping("/{orderId}/addProduct")
-    public void addProductToOrder(@PathVariable Long orderId, @RequestBody Product product) {
-        orderService.addProductToOrder(orderId, product);
+    @PostMapping("/{id}/addProduct")
+    public void addProductToOrder(@PathVariable Long id, @RequestBody Product product) {
+        orderService.addProductToOrder(id, product);
     }
 
     @DeleteMapping("/{orderId}/removeProduct/{productId}")
     public void removeProductFromOrder(@PathVariable Long orderId, @PathVariable Long productId) {
         orderService.removeProductFromOrder(orderId, productId);
     }
-
-
-
 }

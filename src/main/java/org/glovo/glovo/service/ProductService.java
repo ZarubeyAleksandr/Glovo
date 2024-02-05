@@ -12,11 +12,11 @@ import java.util.List;
 public class ProductService {
     private final List<Product> products;
 
-    public Product getProductById(Long productId) {
+    public Product getProductById(Long id) {
         return products.stream()
-                .filter(product -> product.getId().equals(productId))
+                .filter(product -> product.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with ID: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with ID: " + id));
     }
 
     public void addProduct(Product product) {
@@ -24,8 +24,8 @@ public class ProductService {
         products.add(product);
     }
 
-    public void updateProductQuantity(Long productId, int quantity) {
-        Product product = getProductById(productId);
+    public void updateProductQuantity(Long id, int quantity) {
+        Product product = getProductById(id);
         product.setQuantity(quantity);
     }
 
